@@ -1,0 +1,137 @@
+* {
+    padding: 0;   
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff8f0;
+    font-family: 'Google Sans', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: #261C15;
+}
+
+header > h1 {
+    font-size: 2.2em;
+    color: white;
+}
+
+header > p {
+    font-size: 1.1em;
+    color: white;
+}
+
+.cardPomo {
+    width: 500px;
+    height: 600px;
+    margin: 50px auto;
+
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: #dfc5b2;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
+}
+
+.cardPomo > h1 {
+    /* padding-bottom: 30px; */
+    font-size: 4em;
+    font-weight: bold;
+    color: #281D15;
+}
+
+.btnPomo {
+    display: flex;
+    gap: 15px;
+}
+
+.btnPomo button {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    border: none;
+    background-color: #281D15;
+    color: white;
+    font-family: 'Google Sans', Courier, monospace;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
+    transition: all 0.07s ease-in;
+}
+
+.btnPomo button i {
+    font-size: 32px;
+}
+
+.btnPomo button:hover {
+    transform: scale(0.90);
+}
+
+.btnPomo button:active {
+    transform: scale(0.95);
+}
+
+.btnPomo #startBtn:disabled {
+    transform: none;
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #0a0a0a;
+}
+
+.icons {
+    display: flex;
+    gap: 80px;
+}
+
+.icons i {
+    font-size: 32px;
+}
+
+.mode {
+    display: flex;
+    gap: 20px;
+}
+
+.mode button {
+    
+    width: 85px;
+    height: 50px;
+    
+    border: none;
+    border-radius: 16px;
+    
+    color: white;
+    background-color: #281D15;
+    
+    font-family: 'Google Sans', Courier, monospace;
+    
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
+    transition: all 0.07s ease-in;
+}
+
+.mode button:hover {
+    transform: scale(0.90);
+}
+
+.mode button:active {
+    transform: scale(0.95);
+}
+
+.capybara img {
+    width: 150px;
+
+}
