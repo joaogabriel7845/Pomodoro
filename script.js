@@ -52,7 +52,7 @@ function startTimer() {
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
                     body: modo ==="foco" ? "Hora de fazer uma pausa!" : "Hora de focar!",
-                    icon: "assets/images/paxta.png"
+                    icon: "./assets/images/paxta.png"
                 })
             }
 
@@ -117,7 +117,7 @@ function focusMode() {
     clearInterval(intervalo);
     updateTimer();
 
-    capybara.src = "assets/images/capybaraFocus.png"
+    capybara.src = "./assets/images/capybaraFocus.png"
 }
 
 sleepBtn.addEventListener("click", sleepMode)
@@ -138,7 +138,7 @@ function sleepMode() {
     clearInterval(intervalo);
     updateTimer();
 
-    capybara.src = "assets/images/capybaraSleep.jpg"
+    capybara.src = "./assets/images/capybaraSleep.jpg"
 }
 
 addTask.addEventListener("click", addItemTask)
