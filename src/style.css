@@ -1,0 +1,573 @@
+/* ===== RESET ===== */
+
+* {
+    padding: 0;   
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/* ===== VARIÁVEIS ===== */
+
+:root {
+    --cor-principal: #261C15;
+    --cor-secundaria: #fff8f0;
+    --cor-card: #dfc5b2;
+    --cor-borderMode: #0E402D;
+    --cor-borderLight: #e9ecef;
+    --cor-light: #f8f9fa;
+    --cor-lightGray: rgb(252, 252, 252);
+    --cor-gray: #868e96;
+    --cor-success: #40c057;
+}
+
+
+/* ===== BODY ===== */
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--cor-secundaria);
+    font-family: 'Google Sans', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* ===== HEADER ===== */
+
+header {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: #261C15;
+    overflow: hidden;
+}
+
+header > h1 {
+    font-size: 2.2em;
+    color: white;
+}
+
+header > p {
+    font-size: 1.1em;
+    color: white;
+}
+
+
+/* ===== LAYOUT PRINCIPAL ===== */
+
+.main {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+
+/* ===== CARD POMODORO ===== */
+
+.cardPomo {
+    width: 90%;
+    max-width: 500px;
+    min-width: 350px;
+    min-height: 600px;
+    margin: 50px;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: white;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
+}
+
+
+/* ===== TIMER ===== */
+
+.timerHeader {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 30px;
+    background-color: var(--cor-principal);
+}
+
+.timerHeader h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: white;
+}
+
+
+/* ===== MODOS DO TIMER ===== */
+
+.modeContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    gap: 10px;
+
+    border-bottom: 1px solid var(--cor-borderLight);
+}
+
+.btnContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--cor-lightGray);
+    padding: 20px;
+    border-bottom: 1px solid var(--cor-borderLight);
+}
+
+.modeRowBtn {
+    display: flex;
+    gap: 20px;
+}
+
+.modeRowBtn button {
+    
+    width: 100px;
+    height: 50px;
+
+    border: none;
+    border-radius: 16px;
+
+    color: white;
+    background-color: #281D15;
+
+    font-family: 'Google Sans', Courier, monospace;
+
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
+    transition: all 0.07s ease-in;
+}
+
+.modeRowBtn button:hover {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+.modeRowBtn button:active {
+    transform: scale(0.90);
+}
+
+
+/* ===== BOTÕES DO POMODORO ===== */
+
+.btnPomo {
+    display: flex;
+    gap: 15px;
+}
+
+.btnPomo button {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    border: none;
+    background-color: var(--cor-principal);
+    color: white;
+    font-family: 'Google Sans', Courier, monospace;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
+    transition: all 0.07s ease-in;
+}
+
+.btnPomo button i {
+    font-size: 32px;
+}
+
+.btnPomo button:hover {
+    transform: scale(0.90);
+    opacity: 0.7;
+}
+
+.btnPomo button:active {
+    transform: scale(0.95);
+}
+
+.btnPomo #startBtn:disabled {
+    transform: none;
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #0a0a0a;
+}
+
+.icons {
+    display: flex;
+    gap: 80px;
+}
+
+.icons i {
+    font-size: 32px;
+}
+
+
+/* ===== ÁREA DE TAREFAS ===== */
+
+.task {
+    width: 90%;
+    max-width: 500px;
+    min-width: 350px;
+    min-height: 200px;
+    margin: 50px;
+    overflow: hidden;
+
+    gap: 20px;
+
+    border-radius: 16px;
+
+    background-color: white;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
+}
+
+.task-header {
+    display: flex;
+    padding: 20px;
+    background-color: var(--cor-principal);
+}
+
+.task h2 {
+    font-size: 24px;
+    color: white;
+}
+
+
+/* ===== INPUT DE TAREFAS ===== */
+
+.cardInput {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px 25px;
+    display: flex;
+    gap: 10px;
+    background-color: var(--cor-lightGray);
+    border-bottom: 1px solid var(--cor-borderLight);
+}
+
+.cardInput input {
+    
+    flex: 1;
+
+    max-width: 500px;
+
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+
+    background-color: transparent;
+
+    outline: none;
+    padding: 12px 15px;
+
+    font-size: 1rem;
+    font-family: 'Google Sans', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.2s;
+}
+
+.cardInput input:focus {
+    outline: none;
+    border-color: rgba(0, 0, 0, 0.212);
+    box-shadow: 0 0 0 3px rgba(156, 156, 156, 0.15);
+}
+
+#addTask {
+    width: 42px;
+    height: 42px;
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+#addTask i {
+    font-size: 1.2em;
+}
+
+#addTask:hover {
+    transform: scale(0.95);
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+/* ===== LISTA DE TAREFAS ===== */
+
+.taskContainer {
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 10px;
+    
+}
+
+.taskContainer input {
+    display: none;   
+}
+
+#taskList {
+    list-style: none;
+    
+    margin-top: 15px;
+}
+
+#taskList label {
+    display: flex;
+    gap: 10px;
+}
+
+#taskList li {
+    gap: 10px;
+    padding: 15px 12px;
+    border-radius: 10px;
+    color: var(--cor-principal);
+    background: white;
+    margin-bottom: 8px;
+
+    /* cursor: pointer; */
+
+    transition: all 0.2s;
+}
+
+#taskList li:hover {
+    background: var(--cor-light);
+}
+
+.deleteTaskBtn {
+    background: none;
+    border: none;
+    color: var(--cor-gray);
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+#taskList li:hover .deleteTaskBtn{
+    opacity: 1;
+}
+
+.deleteTaskBtn:hover {
+    color: #fa5252;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    color: var(--cor-gray);
+}
+
+.emptyState i {
+    font-size: 40px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+}
+
+
+
+/* ===== CHECKBOX CUSTOM ===== */
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid var(--cor-principal);
+    border-radius: 4px;
+
+    position: relative;
+    cursor: pointer;
+
+    display: inline-block;
+}
+
+input:checked + .checkmark {
+    background-color: var(--cor-success);
+    border-color: var(--cor-success);
+}
+
+input:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+input:checked ~ .taskText {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+
+
+.taskText {
+    flex: 1;
+}
+
+/* ===== FILTROS ===== */
+
+.filters {
+    display: flex;
+    gap: 15px;
+    border-bottom: 1px solid var(--cor-borderLight);
+    padding: 15px 25px;
+}
+
+.filter {
+    padding: 5px 3px;
+    cursor: pointer;
+    color: gray;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.filter:hover {
+    color: var(--cor-principal);
+}
+
+.filter.active {
+    color: var(--cor-principal);
+    border-bottom: 2px solid var(--cor-principal);
+    font-weight: 500;
+}
+
+
+/* ===== CONTADOR DE TAREFAS ===== */
+
+.contTaskContainer {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--cor-lightGray);
+    padding: 15px;
+    border-top: 1px solid var(--cor-borderLight);
+}
+
+.contTaskContainer p {
+    color: var(--cor-gray);
+}
+
+#clearTaskCompleted {
+    cursor: pointer;
+    color: var(--cor-gray);
+    transition: all 0.2s;
+}
+
+#clearTaskCompleted:hover {
+    color: var(--cor-principal);
+}
+
+
+/* ===== CAPYBARA ===== */
+
+.capybara {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.capybara img {
+    padding-top: 15px;
+    width: 150px;
+}
+
+.capybara p {
+    text-align: center;
+}
+
+/* ===== INDICADOR VERDE ===== */
+
+.dotGreen {
+    width: 10px;
+    height: 10px;
+
+    display: inline-flex;
+    padding-top: 10px;
+    border-radius: 50%;
+
+    background: #1ac500;
+    font-size: 0.9em;
+
+    transform: scale(1);
+    animation: pulsedot 1.5s infinite;
+}
+
+
+/* ===== UTILITÁRIOS ===== */
+
+.hidden {
+    display: none;
+}
+
+
+/* ===== ANIMAÇÕES ===== */
+
+.taskEnter {
+    animation: taskAnim 0.3s ease;
+}
+
+.taskDelete {
+    animation: taskDeleteAnim 0.25s ease forwards;
+}
+
+@keyframes pulsedot {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+@keyframes taskAnim {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes taskDeleteAnim {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 1100px) {
+    .task {
+        width: 90%;
+        max-width: 500px;
+    }
+}

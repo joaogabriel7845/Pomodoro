@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro - Dogcore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Pomodoro</h1>
+        <p>Foque por 25 minutos. Descanse por 5. Repita.</p>
+    </header>
+
+    <div class="main">
+
+        <div class="cardPomo">
+
+            <section class="timerHeader">
+                <h1 id="timer"></h1>
+            </section>
+
+            <div class="modeContainer">
+
+                <p>Selecione um Modo:</p>
+
+                <div class="modeRowBtn">
+                    <button id="focusBtn">
+                        <div class="dotGreen"></div> Foco
+                    </button>
+                    <button id="sleepBtn">
+                        <div class="dotGreen hidden"></div> Descanso
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="btnContainer">
+
+                <div class="btnPomo">
+                    <button id="startBtn"><i class="fa-solid fa-play"></i></button>
+                    <button id="pauseBtn"><i class="fa-solid fa-pause"></i></button>
+                    <button id="resetBtn"><i class="fa-solid fa-rotate-left"></i></button>
+                </div>
+
+            </div>
+
+
+            <div class="capybara">
+                <img id="capybaraImg" src="../assets/images/capybaraFocus.png" alt="">
+                <p>Pomodoros completados: <span id="ciclos">0</span></p>
+            </div>
+        </div>
+
+        <section class="task">
+
+            <div class="task-header">
+                <h2><i class="fa-solid fa-check-circle"></i> Tarefas</h2>
+            </div>
+
+            <div class="cardInput">
+                <input type="text" id="taskInput" placeholder="Ex: Estudar Radiologia">
+                <button id="addTask"><i class="fa-solid fa-add"></i></button>
+            </div>
+
+            <div class="filters">
+
+                <span class="filter active" data-filter="all">
+                    Tudo
+                </span>
+
+                <span class="filter" data-filter="ativo">
+                    Ativo
+                </span>
+
+                <span class="filter" data-filter="completados">
+                    Completados
+                </span>
+
+            </div>
+
+            <div class="taskContainer">
+                <ul id="taskList"></ul>
+
+                <div class="emptyState hidden">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <p>Nenhuma tarefa</p>
+                </div>
+
+            </div>
+
+            <div class="contTaskContainer">
+                <p>Tarefas restantes: <span id="contTask">0</span></p>
+                <span id="clearTaskCompleted">Limpar tarefas concluídas</span>
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
