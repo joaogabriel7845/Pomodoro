@@ -53,6 +53,9 @@ header > h1 {
 
 header > p {
     font-size: 1.1em;
+    text-align: center;
+    /* display: flex; */
+    justify-content: center;
     color: white;
 }
 
