@@ -19,13 +19,17 @@ const notify = new Audio("assets/sounds/paxta.mp3")
 
 Notification.requestPermission()
 
-function formatar(numero) {
-    return String(numero).padStart(2, "0")
-}
-
+// ESTADOS
 let tempo = 1500;
 let ciclos = 0
 let intervalo
+let modo = "foco";
+let contadorTask = 0
+
+// FUNÇÕES
+function formatar(numero) {
+    return String(numero).padStart(2, "0")
+}
 
 function updateTimer() {
     let minutos = Math.floor(tempo / 60)
@@ -33,15 +37,8 @@ function updateTimer() {
     timer.textContent = formatar(minutos) + ":" + formatar(segundos)
 }
 
-updateTimer()
-
-startBtn.addEventListener("click", startTimer);
-
-
 function startTimer() {
     
-
-
     startBtn.disabled = true
     console.log("pomodoro iniciado!");
 
@@ -75,14 +72,10 @@ function startTimer() {
     }, 1000)
 }
 
-pauseBtn.addEventListener("click", pauseTimer)
-
 function pauseTimer() {
     startBtn.disabled = false
     clearInterval(intervalo)
 }
-
-resetBtn.addEventListener("click", resetTimer)
 
 function resetTimer() {
 
@@ -97,10 +90,6 @@ function resetTimer() {
 
     updateTimer()
 }
-
-focusBtn.addEventListener("click", focusMode)
-
-let modo = "foco";
 
 function focusMode() {
 
@@ -120,10 +109,6 @@ function focusMode() {
     capybara.src = "./assets/images/capybaraFocus.png"
 }
 
-sleepBtn.addEventListener("click", sleepMode)
-
-sleepBtn.style.border = "none"
-
 function sleepMode() {
 
     modo = "descanso";
@@ -141,15 +126,17 @@ function sleepMode() {
     capybara.src = "./assets/images/capybaraSleep.jpg"
 }
 
-addTask.addEventListener("click", addItemTask)
-
-checkEmptyState()
+function updateTaskCounter() {
+    const total = taskList.children.length
+    contTask.textContent = total
+}
 
 function addItemTask() {
     
     // Impede adicionar tarefa vazia
-    if(inputTask.value.trim() === "") return alert("Você não pode adicionar uma tarefa vazia ;(")
+    if(inputTask.value.trim() === "") return alert("Você não pode adicionar uma tarefa vazia ;(");
     
+    console.log(contTask.textContent)
     let li = document.createElement("li")
     li.classList.add("checkContainer", "taskEnter")
     
@@ -166,6 +153,8 @@ function addItemTask() {
     `
     
     taskList.appendChild(li)
+
+    updateTaskCounter()
     
     // Exclui a entrada de tarefas depois de adicionar
     inputTask.value = ""
@@ -176,20 +165,51 @@ function addItemTask() {
 }
 
 function checkEmptyState() {
+
     if (taskList.children.length === 0) {
         emptyState.classList.remove("hidden")
+        
     } else {
         emptyState.classList.add("hidden")
     }
 }
 
-// Nos permite adicionar uma tarefa apenas digitando e apertando a tecla Enter
+function deleteTaskCompleted() {
+
+    // Selecionando todas as tarefas dentro da "lista"
+    const tasks = taskList.querySelectorAll("li")
+
+    // Percorrendo a lista e verificando se a checkbox está marcada
+    tasks.forEach(task => {
+        
+        const checkbox = task.querySelector('input')
+
+        if (checkbox.checked) {
+            task.remove()
+        } 
+        
+    });
+    
+    updateTaskCounter()
+    checkEmptyState()
+}
+
+// EVENT LISTENERS
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+resetBtn.addEventListener("click", resetTimer);
+focusBtn.addEventListener("click", focusMode);
+sleepBtn.addEventListener("click", sleepMode);
+addTask.addEventListener("click", addItemTask);
+clearTaskCompleted.addEventListener("click", deleteTaskCompleted)
+
+// Nos permite adicionar uma tarefa apenas apertando a tecla Enter
 inputTask.addEventListener("keydown", (e) => {
     if(e.key === "Enter") addItemTask()
 })
 
 // Deletar uma tarefa
-taskList.addEventListener("click", function(e) {
+taskList.addEventListener("click", (e) => {
 
     // Verifica se o clique aconteceu no botão de deletar
     // ou em algum elemento dentro dele
@@ -204,8 +224,14 @@ taskList.addEventListener("click", function(e) {
             // Remove a tarefa da lista
             task.remove()
             // Atualiza o estado vazio da lista
+            updateTaskCounter()
             checkEmptyState()    
         }, 250)
-
+        
+        console.log(contadorTask)
     }
 })
+
+// INICIALIZAÇÃO
+updateTimer()
+checkEmptyState()
