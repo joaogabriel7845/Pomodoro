@@ -16,12 +16,12 @@ const focusBtn = document.getElementById("focusBtn")
 const sleepBtn = document.getElementById("sleepBtn")
 const focusDot = focusBtn.querySelector(".dotGreen")
 const sleepDot = sleepBtn.querySelector(".dotGreen")
-const notify = new Audio("assets/sounds/paxta.mp3")
 
+const notify = new Audio("assets/sounds/notify.mp3")
 Notification.requestPermission()
 
 // ESTADOS
-let tempo = 1500;
+let tempo = 10;
 let ciclos = 0
 let intervalo
 let modo = "foco";
@@ -51,7 +51,7 @@ function startTimer() {
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
                     body: modo === "foco" ? "Hora de fazer uma pausa!" : "Hora de focar!",
-                    icon: "./assets/images/paxta.png"
+                    icon: modo === "foco" ? "./assets/images/capybaraNotify.jpg" : "./assets/images/capybaraNotify2.jpg"
                 })
             }
 
@@ -118,8 +118,7 @@ function sleepMode() {
     sleepDot.classList.remove("hidden")
     focusDot.classList.add("hidden")
 
-
-    tempo = 300;
+    tempo = 10;
 
     startBtn.disabled = false;
     clearInterval(intervalo);
