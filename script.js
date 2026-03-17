@@ -21,7 +21,7 @@ const notify = new Audio("assets/sounds/notify.mp3")
 Notification.requestPermission()
 
 // ESTADOS
-let tempo = 10;
+let tempo = 1500;
 let ciclos = 0
 let intervalo
 let modo = "foco";
@@ -118,7 +118,7 @@ function sleepMode() {
     sleepDot.classList.remove("hidden")
     focusDot.classList.add("hidden")
 
-    tempo = 10;
+    tempo = 300;
 
     startBtn.disabled = false;
     clearInterval(intervalo);
