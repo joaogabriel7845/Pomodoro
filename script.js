@@ -11,6 +11,7 @@ const contTask = document.getElementById("contTask")
 const deletBtn = document.querySelector(".deleteTaskBtn")
 const emptyState = document.querySelector(".emptyState")
 const clearTaskCompleted = document.getElementById("clearTaskCompleted")
+const filters = document.querySelectorAll(".filter")
 const focusBtn = document.getElementById("focusBtn")
 const sleepBtn = document.getElementById("sleepBtn")
 const focusDot = focusBtn.querySelector(".dotGreen")
@@ -25,6 +26,7 @@ let ciclos = 0
 let intervalo
 let modo = "foco";
 let contadorTask = 0
+let filtroAtivo = "tudo"
 
 // FUNÇÕES
 function formatar(numero) {
@@ -38,24 +40,24 @@ function updateTimer() {
 }
 
 function startTimer() {
-    
+
     startBtn.disabled = true
     console.log("pomodoro iniciado!");
 
-    intervalo = setInterval(function(){
-        
-        if(tempo <= 0) {
+    intervalo = setInterval(function () {
+
+        if (tempo <= 0) {
             notify.play()
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
-                    body: modo ==="foco" ? "Hora de fazer uma pausa!" : "Hora de focar!",
+                    body: modo === "foco" ? "Hora de fazer uma pausa!" : "Hora de focar!",
                     icon: "./assets/images/paxta.png"
                 })
             }
 
             clearInterval(intervalo);
-            
-            if(modo === "foco") {
+
+            if (modo === "foco") {
                 sleepMode();
                 startTimer();
                 ciclos++;
@@ -81,7 +83,7 @@ function resetTimer() {
 
     clearInterval(intervalo)
     startBtn.disabled = false
-    
+
     if (modo === "foco") {
         tempo = 1500;
     } else {
@@ -97,10 +99,10 @@ function focusMode() {
 
     focusDot.classList.remove("hidden");
     sleepDot.classList.add("hidden");
-    
+
 
     startBtn.disabled = false;
-    
+
     tempo = 1500;
 
     clearInterval(intervalo);
@@ -112,13 +114,13 @@ function focusMode() {
 function sleepMode() {
 
     modo = "descanso";
-    
+
     sleepDot.classList.remove("hidden")
     focusDot.classList.add("hidden")
 
-    
+
     tempo = 300;
-    
+
     startBtn.disabled = false;
     clearInterval(intervalo);
     updateTimer();
@@ -132,14 +134,13 @@ function updateTaskCounter() {
 }
 
 function addItemTask() {
-    
+
     // Impede adicionar tarefa vazia
-    if(inputTask.value.trim() === "") return alert("Você não pode adicionar uma tarefa vazia ;(");
-    
-    console.log(contTask.textContent)
+    if (inputTask.value.trim() === "") return alert("Você não pode adicionar uma tarefa vazia ;(");
+
     let li = document.createElement("li")
     li.classList.add("checkContainer", "taskEnter")
-    
+
     // Criação dinâmica de tarefas
     li.innerHTML = `
     <label>
@@ -151,24 +152,88 @@ function addItemTask() {
         </span>
     </label>
     `
-    
+
     taskList.appendChild(li)
 
+    const checkbox = li.querySelector('input')
+    // Na adição de uma tarefa sempre vai verificar o checkbox com base no filtro
+    checkbox.addEventListener("change", () => {
+        aplicarFiltro(filtroAtivo)
+    })
+
+
     updateTaskCounter()
-    
+
     // Exclui a entrada de tarefas depois de adicionar
     inputTask.value = ""
 
     // Atualiza o estado vazio da lista
     checkEmptyState()
-    
+
+}
+
+function aplicarFiltro() {
+
+    const tarefas = taskList.querySelectorAll("li")
+
+    tarefas.forEach(tarefa => {
+
+        const checkbox = tarefa.querySelector("input")
+
+        if (filtroAtivo === "tudo") {
+
+            tarefa.classList.remove("hidden")
+
+        } else if (filtroAtivo === "completados") {
+
+            if (checkbox.checked) {
+                tarefa.classList.remove("hidden")
+            } else {
+                tarefa.classList.add("hidden")
+            }
+
+        } else {
+
+            if (checkbox.checked) {
+                tarefa.classList.add("hidden")
+            } else {
+                tarefa.classList.remove("hidden")
+            }
+
+        }
+    })
+
+    checkEmptyState()
+    updateTaskCounter()
+
+}
+
+function filtersTask() {
+
+
+    filters.forEach(task => {
+
+        task.addEventListener("click", () => {
+
+            filtroAtivo = task.dataset.filter
+
+            filters.forEach(f => f.classList.remove("active"))
+            task.classList.add("active")
+
+            aplicarFiltro()
+
+        })
+
+    })
 }
 
 function checkEmptyState() {
 
-    if (taskList.children.length === 0) {
+    const tarefasVisiveis = taskList.querySelectorAll("li:not(.hidden)")
+
+    if (tarefasVisiveis.length === 0) {
         emptyState.classList.remove("hidden")
-        
+
     } else {
         emptyState.classList.add("hidden")
     }
@@ -181,15 +246,15 @@ function deleteTaskCompleted() {
 
     // Percorrendo a lista e verificando se a checkbox está marcada
     tasks.forEach(task => {
-        
+
         const checkbox = task.querySelector('input')
 
         if (checkbox.checked) {
             task.remove()
-        } 
-        
+        }
+
     });
-    
+
     updateTaskCounter()
     checkEmptyState()
 }
@@ -205,7 +270,7 @@ clearTaskCompleted.addEventListener("click", deleteTaskCompleted)
 
 // Nos permite adicionar uma tarefa apenas apertando a tecla Enter
 inputTask.addEventListener("keydown", (e) => {
-    if(e.key === "Enter") addItemTask()
+    if (e.key === "Enter") addItemTask()
 })
 
 // Deletar uma tarefa
@@ -217,21 +282,20 @@ taskList.addEventListener("click", (e) => {
 
         // Encontra o <li> da tarefa correspondente
         const task = e.target.closest("li")
-        
-        // Animação de remoção
+
+        // Animação de remoção em todos os filtros
+        task.style.display = "flex"
         task.classList.add("taskDelete")
         setTimeout(() => {
-            // Remove a tarefa da lista
             task.remove()
-            // Atualiza o estado vazio da lista
             updateTaskCounter()
-            checkEmptyState()    
+            checkEmptyState()
         }, 250)
-        
-        console.log(contadorTask)
+
     }
 })
 
 // INICIALIZAÇÃO
 updateTimer()
 checkEmptyState()
+filtersTask()

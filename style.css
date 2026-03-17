@@ -104,7 +104,7 @@ header > p {
     background-color: var(--cor-principal);
 }
 
-.timerHeader h1 {
+.timerHeader span {
     font-size: 3.5em;
     font-weight: bold;
     color: white;
@@ -156,16 +156,16 @@ header > p {
     font-family: 'Google Sans', Courier, monospace;
 
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
-    transition: all 0.07s ease-in;
+    transition: all 0.3s ease;
 }
 
 .modeRowBtn button:hover {
-    transform: scale(0.95);
+    transform: scale(0.9);
     opacity: 0.7;
 }
 
 .modeRowBtn button:active {
-    transform: scale(0.90);
+    transform: scale(0.9);
 }
 
 
@@ -185,7 +185,7 @@ header > p {
     color: white;
     font-family: 'Google Sans', Courier, monospace;
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.212);
-    transition: all 0.07s ease-in;
+    transition: all 0.3s ease;
 }
 
 .btnPomo button i {
@@ -193,7 +193,7 @@ header > p {
 }
 
 .btnPomo button:hover {
-    transform: scale(0.90);
+    transform: scale(0.9);
     opacity: 0.7;
 }
 
@@ -292,6 +292,7 @@ header > p {
     color: white;
     border: none;
     border-radius: 6px;
+    transition: all 0.3s ease;
 }
 
 #addTask i {
@@ -300,7 +301,6 @@ header > p {
 
 #addTask:hover {
     transform: scale(0.95);
-    transition: all 0.2s ease;
     opacity: 0.7;
 }
 
@@ -377,7 +377,6 @@ header > p {
     opacity: 0.7;
     margin-bottom: 10px;
 }
-
 
 
 /* ===== CHECKBOX CUSTOM ===== */
