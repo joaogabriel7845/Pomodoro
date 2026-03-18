@@ -50,7 +50,11 @@ function startTimer() {
     intervalo = setInterval(function () {
 
         if (tempo <= 0) {
-            notify.play()
+            try {
+                notify.play()
+            } catch(e) {
+                console.log("Audio bloqueado:", e)
+            }
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
                     body: modo === "foco" ? "Hora de fazer uma pausa!" : "Hora de focar!",
@@ -67,6 +71,7 @@ function startTimer() {
                 contadorCiclos.textContent = ciclos
             } else {
                 focusMode();
+                updateTimer();
             }
 
             return
@@ -74,7 +79,7 @@ function startTimer() {
 
         tempo--;
         updateTimer()
-    }, 1000)
+    }, 60)
 }
 
 function pauseTimer() {
