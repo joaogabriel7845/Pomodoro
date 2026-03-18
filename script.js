@@ -50,18 +50,13 @@ function startTimer() {
 
         if (tempo <= 0) {
             clearInterval(intervalo)
-            try {
-                notify.play()
-            } catch(e) {
-                console.log("Audio bloqueado:", e)
-            }
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
                     body: modo === "foco" ? "Hora de fazer uma pausa!" : "Hora de focar!",
                     icon: modo === "foco" ? "./assets/images/capybaraNotify.jpg" : "./assets/images/capybaraNotify2.jpg"
                 })
             }
-
+            
             if (modo === "foco") {
                 sleepMode()
                 startTimer()
@@ -71,7 +66,13 @@ function startTimer() {
                 focusMode();
                 updateTimer();
             }
-
+            
+            try {
+                notify.play()
+            } catch(e) {
+                console.log("Audio bloqueado:", e)
+            }
+            
             return
         }
 
