@@ -41,6 +41,9 @@ function updateTimer() {
 
 function startTimer() {
 
+    // Limpando o intervalo antes de começar um novo
+    clearInterval(intervalo)
+
     startBtn.disabled = true
     console.log("pomodoro iniciado!");
 
