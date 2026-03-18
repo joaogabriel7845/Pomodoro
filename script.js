@@ -41,15 +41,15 @@ function updateTimer() {
 
 function startTimer() {
 
-    // Limpando o intervalo antes de começar um novo
     clearInterval(intervalo)
-
     startBtn.disabled = true
     console.log("pomodoro iniciado!");
 
     intervalo = setInterval(function () {
 
         if (tempo <= 0) {
+            clearInterval(intervalo)
+            
             notify.play()
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
@@ -58,21 +58,19 @@ function startTimer() {
                 })
             }
 
-            clearInterval(intervalo);
-
             if (modo === "foco") {
-                sleepMode();
-                startTimer();
-                ciclos++;
+                sleepMode()
+                startTimer()
+                ciclos++
                 contadorCiclos.textContent = ciclos
             } else {
-                focusMode();
+                focusMode()
             }
 
             return
         }
 
-        tempo--;
+        tempo--
         updateTimer()
     }, 1000)
 }
