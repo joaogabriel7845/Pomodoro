@@ -42,12 +42,14 @@ function updateTimer() {
 function startTimer() {
 
     clearInterval(intervalo)
+
     startBtn.disabled = true
     console.log("pomodoro iniciado!");
 
     intervalo = setInterval(function () {
 
         if (tempo <= 0) {
+            clearInterval(intervalo)
             try {
                 notify.play()
             } catch(e) {
