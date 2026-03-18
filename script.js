@@ -65,6 +65,7 @@ function startTimer() {
                 contadorCiclos.textContent = ciclos
             } else {
                 focusMode()
+                updateTimer()
             }
 
             return
