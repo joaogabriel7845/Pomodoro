@@ -41,9 +41,7 @@ function updateTimer() {
 
 function startTimer() {
 
-    // Limpando o intervalo antes de começar um novo
     clearInterval(intervalo)
-
     startBtn.disabled = true
     console.log("pomodoro iniciado!");
 
@@ -62,12 +60,10 @@ function startTimer() {
                 })
             }
 
-            clearInterval(intervalo);
-
             if (modo === "foco") {
-                sleepMode();
-                startTimer();
-                ciclos++;
+                sleepMode()
+                startTimer()
+                ciclos++
                 contadorCiclos.textContent = ciclos
             } else {
                 focusMode();
@@ -77,7 +73,7 @@ function startTimer() {
             return
         }
 
-        tempo--;
+        tempo--
         updateTimer()
     }, 60)
 }
@@ -165,7 +161,7 @@ function addItemTask() {
     const checkbox = li.querySelector('input')
     // Na adição de uma tarefa sempre vai verificar o checkbox com base no filtro
     checkbox.addEventListener("change", () => {
-        aplicarFiltro(filtroAtivo)
+        aplicarFiltro()
     })
 
 
