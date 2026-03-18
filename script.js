@@ -1,4 +1,4 @@
-const timer = document.getElementById("timer")
+1const timer = document.getElementById("timer")
 const startBtn = document.getElementById("startBtn")
 const pauseBtn = document.getElementById("pauseBtn")
 const resetBtn = document.getElementById("resetBtn")
@@ -158,7 +158,7 @@ function addItemTask() {
     const checkbox = li.querySelector('input')
     // Na adição de uma tarefa sempre vai verificar o checkbox com base no filtro
     checkbox.addEventListener("change", () => {
-        aplicarFiltro(filtroAtivo)
+        aplicarFiltro()
     })
 
 
