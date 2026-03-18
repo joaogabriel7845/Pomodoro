@@ -75,7 +75,7 @@ function startTimer() {
 
         tempo--
         updateTimer()
-    }, 60)
+    }, 1000)
 }
 
 function pauseTimer() {
