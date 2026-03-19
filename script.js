@@ -1,3 +1,5 @@
+const themeBtn = document.getElementById("themeBtn")
+const icon = themeBtn.querySelector("i")
 const timer = document.getElementById("timer")
 const startBtn = document.getElementById("startBtn")
 const pauseBtn = document.getElementById("pauseBtn")
@@ -107,7 +109,6 @@ function focusMode() {
     focusDot.classList.remove("hidden");
     sleepDot.classList.add("hidden");
 
-
     startBtn.disabled = false;
 
     tempo = 1500;
@@ -115,23 +116,34 @@ function focusMode() {
     clearInterval(intervalo);
     updateTimer();
 
-    capybara.src = "./assets/images/capybaraFocus.png"
+    if (document.body.classList.contains("dark")) {
+        capybara.src = "./assets/images/cat/blackCatFocus.png"
+        capybara.style.width = "160px"
+    } else {
+        capybara.src = "./assets/images/capybara/capybaraFocus.png"
+        
+    }
+    
 }
 
 function sleepMode() {
-
+    
     modo = "descanso";
-
+    
     sleepDot.classList.remove("hidden")
     focusDot.classList.add("hidden")
-
+    
     tempo = 300;
-
+    
     startBtn.disabled = false;
     clearInterval(intervalo);
     updateTimer();
-
-    capybara.src = "./assets/images/capybaraSleep.jpg"
+    
+    if (document.body.classList.contains("dark")) {
+        capybara.src = "./assets/images/cat/blackCatSleep.png"
+    } else {
+        capybara.src = "./assets/images/capybara/capybaraSleep.jpg"
+    }
 }
 
 function updateTaskCounter() {
@@ -140,7 +152,7 @@ function updateTaskCounter() {
 }
 
 function addItemTask() {
-
+    
     // Impede adicionar tarefa vazia
     if (inputTask.value.trim() === "") return alert("Você não pode adicionar uma tarefa vazia ;(");
 
@@ -265,6 +277,24 @@ function deleteTaskCompleted() {
     checkEmptyState()
 }
 
+function themeChange() {
+    document.body.classList.toggle("dark")
+    icon.classList.toggle("fa-moon")
+    icon.classList.toggle("fa-sun")
+    icon.style.color = document.body.classList.contains("dark") ? "#FFEE8C" : "white"
+
+    if(document.body.classList.contains("dark") && modo === "foco") {
+        capybara.src = "./assets/images/cat/blackCatFocus.png"
+    } else if (document.body.classList.contains("dark") && modo === "descanso") {
+        capybara.src = "./assets/images/cat/blackCatSleep.png"
+    } else if (!document.body.classList.contains("dark") && modo === "foco"){
+        capybara.src = "./assets/images/capybara/capybaraFocus.png"
+    } else {
+        capybara.src = "./assets/images/capybara/capybaraSleep.jpg"
+    }
+
+}
+
 // EVENT LISTENERS
 startBtn.addEventListener("click", startTimer);
 pauseBtn.addEventListener("click", pauseTimer);
@@ -273,6 +303,7 @@ focusBtn.addEventListener("click", focusMode);
 sleepBtn.addEventListener("click", sleepMode);
 addTask.addEventListener("click", addItemTask);
 clearTaskCompleted.addEventListener("click", deleteTaskCompleted)
+themeBtn.addEventListener("click", themeChange)
 
 // Nos permite adicionar uma tarefa apenas apertando a tecla Enter
 inputTask.addEventListener("keydown", (e) => {
@@ -300,6 +331,7 @@ taskList.addEventListener("click", (e) => {
 
     }
 })
+
 
 // INICIALIZAÇÃO
 updateTimer()
