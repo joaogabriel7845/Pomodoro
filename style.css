@@ -314,7 +314,7 @@ button:focus:not(:focus-visible) {
     max-width: 500px;
     border: 1px solid var(--cor-surface);
     border-radius: 6px;
-    color: var(--cor-text-inverse);
+    color: var(--cor-text-active);
     background-color: transparent;
     outline: none;
     padding: 12px 15px;
