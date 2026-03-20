@@ -118,7 +118,6 @@ function focusMode() {
 
     if (document.body.classList.contains("dark")) {
         capybara.src = "./assets/images/cat/blackCatFocus.png"
-        capybara.style.width = "160px"
     } else {
         capybara.src = "./assets/images/capybara/capybaraFocus.png"
         
