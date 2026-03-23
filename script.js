@@ -55,7 +55,7 @@ function startTimer() {
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
                     body: modo === "foco" ? "Hora de fazer uma pausa!" : "Hora de focar!",
-                    icon: modo === "foco" ? "./assets/images/capybaraNotify.jpg" : "./assets/images/capybaraNotify2.jpg"
+                    icon: modo === "foco" ? "./assets/images/capybara/capybaraNotify.jpg" : "./assets/images/capybara/capybaraNotify2.jpg"
                 })
             }
             
@@ -120,7 +120,6 @@ function focusMode() {
         capybara.src = "./assets/images/cat/blackCatFocus.png"
     } else {
         capybara.src = "./assets/images/capybara/capybaraFocus.png"
-        
     }
     
 }
