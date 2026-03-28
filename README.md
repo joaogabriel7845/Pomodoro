@@ -18,7 +18,7 @@ A técnica Pomodoro divide o trabalho em sessões de foco de 25 minutos, separad
 - Troca automática de modo ao fim de cada sessão
 - Contador de ciclos completados
 - Som e notificação nativa do navegador ao fim de cada sessão
-- Imagem da capivara muda de acordo com o modo ativo
+- Imagem muda de acordo com o modo e tema ativos
 
 **Tarefas**
 - Adicionar tarefas com botão ou tecla Enter
@@ -55,12 +55,17 @@ pomodoro-dogcore/
 ├── index.html
 ├── style.css
 ├── script.js
+├── README.md
 └── assets/
     ├── images/
-    │   ├── capybaraFocus.png
-    │   ├── capybaraSleep.jpg
-    │   ├── capybaraNotify.jpg
-    │   └── capybaraNotify2.jpg
+    │   ├── capybara/
+    │   │   ├── capybaraFocus.png
+    │   │   ├── capybaraNotify.jpg
+    │   │   ├── capybaraNotify2.jpg
+    │   │   └── capybaraSleep.jpg
+    │   └── cat/
+    │       ├── blackCatFocus.png
+    │       └── blackCatSleep.png
     └── sounds/
         └── notify.mp3
 ```
