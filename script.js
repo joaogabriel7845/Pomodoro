@@ -24,6 +24,8 @@ Notification.requestPermission()
 
 // ESTADOS
 let tempo = 1500;
+let tempoInicio = null;
+let tempoRestanteAoIniciar = 0;
 let ciclos = 0
 let intervalo
 let modo = "foco";
@@ -47,10 +49,16 @@ function startTimer() {
 
     startBtn.disabled = true
     console.log("pomodoro iniciado!");
+    tempoRestanteAoIniciar = tempo
+    tempoInicio = Date.now()
 
     intervalo = setInterval(function () {
 
+        const decorrido = Math.floor((Date.now() - tempoInicio) / 1000)
+        tempo = tempoRestanteAoIniciar - decorrido
+
         if (tempo <= 0) {
+            
             clearInterval(intervalo)
             if (Notification.permission === "granted") {
                 new Notification(modo === "foco" ? "Pomodoro finalizado!" : "Mais uma sessão de estudos?", {
@@ -78,9 +86,8 @@ function startTimer() {
             return
         }
 
-        tempo--
         updateTimer()
-    }, 1000)
+    }, 500)
 }
 
 function pauseTimer() {
