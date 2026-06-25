@@ -22,17 +22,45 @@ const sleepDot = sleepBtn.querySelector(".dotGreen")
 const notify = new Audio("assets/sounds/notify.mp3")
 Notification.requestPermission()
 
+let tarefas = []
+
 // ESTADOS
 let tempo = 1500;
 let tempoInicio = null;
 let tempoRestanteAoIniciar = 0;
 let ciclos = 0
 let intervalo
-let modo = "foco";
 let contadorTask = 0
+let modo = "foco";
 let filtroAtivo = "tudo"
+let tema = "claro"
 
 // FUNÇÕES
+
+function loadFromLocalStorage() {
+    ciclos = localStorage.getItem('ciclos')
+    modo = JSON.parse(localStorage.getItem('modo'))
+    tema = JSON.parse(localStorage.getItem('tema'))
+    contadorTask = JSON.parse(localStorage.getItem('contadorTask'))
+    tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
+
+    modo === "foco" ? focusMode() : sleepMode()
+
+    tarefas.forEach((t, id) => {
+        renderTask(t, id)
+
+    })
+
+    updateTaskCounter()
+
+}
+
+function saveToLocalStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value))
+}
+
+
+
 function formatar(numero) {
     return String(numero).padStart(2, "0")
 }
@@ -72,6 +100,7 @@ function startTimer() {
                 startTimer()
                 ciclos++
                 contadorCiclos.textContent = ciclos
+                saveToLocalStorage('ciclos', ciclos)
             } else {
                 focusMode();
                 updateTimer();
@@ -112,6 +141,7 @@ function resetTimer() {
 function focusMode() {
 
     modo = "foco";
+    saveToLocalStorage('modo', modo)
 
     focusDot.classList.remove("hidden");
     sleepDot.classList.add("hidden");
@@ -123,17 +153,14 @@ function focusMode() {
     clearInterval(intervalo);
     updateTimer();
 
-    if (document.body.classList.contains("dark")) {
-        capybara.src = "./assets/images/cat/blackCatFocus.png"
-    } else {
-        capybara.src = "./assets/images/capybara/capybaraFocus.png"
-    }
+    checkAnimal();
     
 }
 
 function sleepMode() {
     
     modo = "descanso";
+    saveToLocalStorage('modo', modo)
     
     sleepDot.classList.remove("hidden")
     focusDot.classList.add("hidden")
@@ -144,59 +171,78 @@ function sleepMode() {
     clearInterval(intervalo);
     updateTimer();
     
-    if (document.body.classList.contains("dark")) {
-        capybara.src = "./assets/images/cat/blackCatSleep.png"
-    } else {
-        capybara.src = "./assets/images/capybara/capybaraSleep.jpg"
-    }
+    checkAnimal();
 }
 
 function updateTaskCounter() {
-    const total = taskList.children.length
-    contTask.textContent = total
+        const total = taskList.children.length
+        contTask.textContent = total
+
+    contadorTask = total
+    saveToLocalStorage('contadorTask', contadorTask)
 }
 
-function addItemTask() {
-    
-    // Impede adicionar tarefa vazia
-    if (inputTask.value.trim() === "") return alert("Você não pode adicionar uma tarefa vazia ;(");
+function renderTask({texto, concluida, id}) {
 
     let li = document.createElement("li")
     li.classList.add("checkContainer", "taskEnter")
 
     // Criação dinâmica de tarefas
     li.innerHTML = `
-    <label>
-        <input type="checkbox">
-        <span class="checkmark"></span>
-        <span class="taskText">${inputTask.value}</span>
-        <span class="deleteTaskBtn">
-            <i class="fa-solid fa-times"></i>
-        </span>
-    </label>
-    `
+        <label>
+            <input type="checkbox" ${concluida ? "checked" : ""} >
+            <span class="checkmark"></span>
+            <span class="taskText">${texto}</span>
+            <span class="deleteTaskBtn">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </label>
+        `
 
     taskList.appendChild(li)
 
+    li.dataset.id = id
+
     const checkbox = li.querySelector('input')
-    // Na adição de uma tarefa sempre vai verificar o checkbox com base no filtro
+    const index = tarefas.findIndex(t => t.id === li.dataset.id)
+    
     checkbox.addEventListener("change", () => {
+        tarefas[index].concluida = checkbox.checked
         aplicarFiltro()
+
+        saveToLocalStorage('tarefas', tarefas)
     })
-
-
-    updateTaskCounter()
-
-    // Exclui a entrada de tarefas depois de adicionar
-    inputTask.value = ""
-
-    // Atualiza o estado vazio da lista
-    checkEmptyState()
 
 }
 
-function aplicarFiltro() {
+function addItemTask() {
+    
+    let idTask = crypto.randomUUID()
+    // Impede adicionar tarefa vazia
+    if (inputTask.value.trim() === "") return alert("Você não pode adicionar uma tarefa vazia ;(");
 
+    renderTask({texto: inputTask.value, concluida: false, id: idTask})
+    
+    updateTaskCounter()
+
+    tarefas.push({
+        id: idTask,
+        texto: inputTask.value,
+        concluida: false,
+    })
+
+    saveToLocalStorage('tarefas', tarefas)
+    
+    // Exclui a entrada de tarefas depois de adicionar
+    inputTask.value = ""
+    
+    // Atualiza o estado vazio da lista
+    checkEmptyState()
+    
+}
+
+function aplicarFiltro() {
+    
     const tarefas = taskList.querySelectorAll("li")
 
     tarefas.forEach(tarefa => {
@@ -266,28 +312,27 @@ function deleteTaskCompleted() {
 
     // Selecionando todas as tarefas dentro da "lista"
     const tasks = taskList.querySelectorAll("li")
-
+    
     // Percorrendo a lista e verificando se a checkbox está marcada
     tasks.forEach(task => {
-
+        
         const checkbox = task.querySelector('input')
-
+        const index = tarefas.findIndex(t => t.id === task.dataset.id)
+        
         if (checkbox.checked) {
+            tarefas.splice(index, 1)
             task.remove()
         }
 
     });
 
+    saveToLocalStorage('tarefas', tarefas)
+
     updateTaskCounter()
     checkEmptyState()
 }
 
-function themeChange() {
-    document.body.classList.toggle("dark")
-    icon.classList.toggle("fa-moon")
-    icon.classList.toggle("fa-sun")
-    icon.style.color = document.body.classList.contains("dark") ? "#FFEE8C" : "white"
-
+function checkAnimal() {
     if(document.body.classList.contains("dark") && modo === "foco") {
         capybara.src = "./assets/images/cat/blackCatFocus.png"
     } else if (document.body.classList.contains("dark") && modo === "descanso") {
@@ -297,8 +342,49 @@ function themeChange() {
     } else {
         capybara.src = "./assets/images/capybara/capybaraSleep.jpg"
     }
+}
+
+function themeChange() {
+
+    document.body.classList.toggle("dark")
+    
+    if (document.body.classList.contains("dark")) {
+        tema = "escuro"
+    } else {
+        tema = "claro"
+        document.body.classList.add("white")
+    }
+
+    saveToLocalStorage('tema', tema)
+
+    console.log(tema)
+
+    icon.classList.toggle("fa-moon")
+    icon.classList.toggle("fa-sun")
+    icon.style.color = document.body.classList.contains("dark") ? "#FFEE8C" : "white"
+
+    checkAnimal()
 
 }
+
+function applyTheme() {
+    tema === "claro" ? document.body.classList.remove("dark") : document.body.classList.add("dark")
+
+    tema === "claro" ? icon.classList.add("fa-moon") : icon.classList.add("fa-sun")
+
+    if(tema === "claro") {
+        icon.classList.add("fa-moon")
+        icon.classList.remove("fa-sun")
+    } else {
+        icon.classList.add("fa-sun")
+        icon.classList.remove("fa-moon")
+        
+    }
+    
+    icon.style.color = document.body.classList.contains("dark") ? "#FFEE8C" : "white"
+    
+}
+
 
 // EVENT LISTENERS
 startBtn.addEventListener("click", startTimer);
@@ -317,7 +403,7 @@ inputTask.addEventListener("keydown", (e) => {
 
 // Deletar uma tarefa
 taskList.addEventListener("click", (e) => {
-
+    
     // Verifica se o clique aconteceu no botão de deletar
     // ou em algum elemento dentro dele
     if (e.target.closest(".deleteTaskBtn")) {
@@ -329,7 +415,12 @@ taskList.addEventListener("click", (e) => {
         task.style.display = "flex"
         task.classList.add("taskDelete")
         setTimeout(() => {
+            tarefas.splice(Number(task.dataset.index), 1)
             task.remove()
+            saveToLocalStorage('tarefas', tarefas)
+            taskList.querySelectorAll("li").forEach((li, index) => {
+                li.dataset.index = index
+            })
             updateTaskCounter()
             checkEmptyState()
         }, 250)
@@ -337,8 +428,13 @@ taskList.addEventListener("click", (e) => {
     }
 })
 
-
 // INICIALIZAÇÃO
+
+console.log(taskList)
+
+loadFromLocalStorage()
+applyTheme()
+checkAnimal()
 updateTimer()
 checkEmptyState()
 filtersTask()
