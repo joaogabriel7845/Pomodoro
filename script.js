@@ -38,11 +38,13 @@ let tema = "claro"
 // FUNÇÕES
 
 function loadFromLocalStorage() {
-    ciclos = localStorage.getItem('ciclos')
+    ciclos = JSON.parse(localStorage.getItem('ciclos'))
     modo = JSON.parse(localStorage.getItem('modo'))
     tema = JSON.parse(localStorage.getItem('tema'))
     contadorTask = JSON.parse(localStorage.getItem('contadorTask'))
     tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
+
+    contadorCiclos.textContent = ciclos
 
     modo === "foco" ? focusMode() : sleepMode()
 
